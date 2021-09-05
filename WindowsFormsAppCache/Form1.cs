@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CacheLibrary;
 
@@ -32,6 +25,32 @@ namespace WindowsFormsAppCache
         private void buttonPut_Click(object sender, EventArgs e)
         {
             cache.Put(textBoxKey.Text, textBoxValue.Text);
+        }
+
+        private void radioButtonMethodLRU_CheckedChanged(object sender, EventArgs e)
+        {
+            cache.SetEvictionStrategy(EvictionStrategy.LRU);
+        }
+
+        private void radioButtonMethodMRU_CheckedChanged(object sender, EventArgs e)
+        {
+            cache.SetEvictionStrategy(EvictionStrategy.MRU);
+        }
+
+        private void radioButtonCustom_CheckedChanged(object sender, EventArgs e)
+        {
+            cache.SetEvictionStrategy(
+                EvictionStrategy.Custom,
+                (CacheItem<string, string>[] items, int startIndex, int endIndex) =>
+                    {
+                        return new Random().Next(startIndex, endIndex + 1);
+                    }
+            );
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            cache.Clear();
         }
     }
 }

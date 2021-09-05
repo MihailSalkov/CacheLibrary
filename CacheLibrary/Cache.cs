@@ -37,6 +37,12 @@ namespace CacheLibrary
             this.GetEvictionIndexCustom = GetEvictionIndexCustom;
         }
 
+        /// <summary>
+        /// Получить элемент кеша
+        /// </summary>
+        /// <param name="key">Ключ</param>
+        /// <param name="value">Значение (по ссылке)</param>
+        /// <returns>Найден ли элемент</returns>
         public bool Get(K key, out V value)
         {
             int hash = getHash(key);
@@ -57,6 +63,11 @@ namespace CacheLibrary
             return true;
         }
 
+        /// <summary>
+        /// Поместить элемент в кеш
+        /// </summary>
+        /// <param name="key">Ключ</param>
+        /// <param name="value">Значение</param>
         public void Put(K key, V value)
         {
             int hash = getHash(key);
@@ -80,6 +91,9 @@ namespace CacheLibrary
             Promote(index, startIndex, endIndex);
         }
 
+        /// <summary>
+        /// Очистить кеш
+        /// </summary>
         public void Clear()
         {
             foreach (var item in items)
